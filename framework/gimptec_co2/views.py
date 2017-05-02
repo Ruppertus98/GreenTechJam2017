@@ -15,4 +15,5 @@ def co2(request):
     except:
         co2_val = random.randint(500, 2000)
 
-    return JsonResponse({'value': co2_val, 'time': datetime.utcnow().timestamp()})
+    return JsonResponse({'value': co2_val, 'time': datetime.utcnow().isoformat()})
+
