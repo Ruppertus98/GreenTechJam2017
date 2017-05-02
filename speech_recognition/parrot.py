@@ -28,5 +28,6 @@ def listener():
               print("Google Speech Recognition could not understand your audio")
          except sr.RequestError as e:
               print("Could not request results from Google Speech Recognition service; {0}".format(e))
-  
-listener()
+
+while True:
+	listener()
