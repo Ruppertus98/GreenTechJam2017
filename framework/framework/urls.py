@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^', include('heating.views')),
     url(r'^', include('window.views')),
     url(r'^', include('random_sensors.urls')),
+    url(r'^', include('flatgui.views')),
 ]

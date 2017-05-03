@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+        <title>Gui</title>
+        <style>
+            #background
+            {
+                width: auto;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #foreground
+            {
+                width: auto;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #board
+            {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .hidden
+            {
+                visibility: hidden;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+        <script>
+            var host = "http://localhost:8000/";
+            function temperature() {
+                $.get(host + "temperature").done(function (data) {
+                    $("#inside_temp").text(data.value+"°C");
+                })
+            }
+            function outside_temperature() {
+                $.get(host + "outside_temperature").done(function (data) {
+                    console.log(data.value);
+                    $("#outside_temp").text(data.value+"°C");
+                })
+            }
+            function co2() {
+                $.get(host + "CO2").done(function (data) {
+                    $("#inside_co2").text(data.value+" ppm");
+                })
+            }
+            function window_state() {
+                $.get(host + "window").done(function (data) {
+                    if(data.open){
+                        $("#window").removeClass("hidden")
+                    }else{
+                        $("#window").addClass("hidden");
+                    }
+                })
+            }
+            $(document).ready(function() {
+                console.log( "ready!" );
+                temperature();
+                co2();
+                window_state();
+                outside_temperature();
+                window.setInterval(temperature, 3000);
+                window.setInterval(outside_temperature, 3000);
+                window.setInterval(co2, 6000);
+                window.setInterval(window_state, 3000);
+            });
+        </script>
+     </head>
+     <body>
+	     <div data-role="page" id="gameArea">
+
+			<img id="background" src="{% static 'flat.jpg' %}">
+			
+			<canvas id="board"></canvas>
+			
+			<svg id="foreground" viewBox="0 0 240 160" preserveAspectRatio="xMinYMin">
+				 <g id="overlay">
+                 <rect id="window" class="hidden" x="78" y="27" width="7" height="111" style="fill:rgb(0,196,33);stroke-width:0;stroke:rgb(0,0,0)" />
+				<text id="outside_temp" font-weight="bold" stroke-width="0" xml:space="preserve" text-anchor="middle"
+                      font-family="Monospace" font-size="6" y="120" x="45" stroke="#ffffff" fill="#000000">666666</text>
+                <text id="inside_temp" font-weight="bold" stroke-width="0" xml:space="preserve" text-anchor="middle"
+                      font-family="Monospace" font-size="6" y="85" x="145" stroke="#ffffff" fill="#000000">777777</text>
+                <text id="inside_co2" font-weight="bold" stroke-width="0" xml:space="preserve" text-anchor="middle"
+                      font-family="Monospace" font-size="6" y="95" x="145" stroke="#ffffff" fill="#000000">777777</text>
+			 </g>
+			</svg>
+		</div>
+	</body>
+</html>
