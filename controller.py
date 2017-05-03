@@ -22,25 +22,22 @@ while True:
 	time_tem = dic_tem.get('time') 
 	value_tem =  dic_tem.get('value')
 
-	print(value_co2)
-	print(value_hum)
-	print(value_tem)
 	
 	if (value_co2 > 800):
-		requests.post('http://localhost:8000/window',  data = {'open':'true'})
-		requests.post('http://localhost:8000/heating',  data = {'on':'false'})
+		requests.post('http://localhost:8000/window',  data = {'open':True})
+		requests.post('http://localhost:8000/heating',  data = {'on':False})
 	elif (value_co2 < 600):
-		requests.post('http://localhost:8000/window',  data = {'open':'true'})
+		requests.post('http://localhost:8000/window',  data = {'open':True})
 	if (value_tem > 30):
-		requests.post('http://localhost:8000/window',  data = {'open':'true'})
-		requests.post('http://localhost:8000/heating',  data = {'on':'false'})
+		requests.post('http://localhost:8000/window',  data = {'open':True})
+		requests.post('http://localhost:8000/heating',  data = {'on':False})
 	elif (value_tem < 20):
-		requests.post('http://localhost:8000/window',  data = {'open':'true'})
+		requests.post('http://localhost:8000/window',  data = {'open':True})
 	elif (value_tem < 10):
-		requests.post('http://localhost:8000/heating',  data = {'on':'false'})
+		requests.post('http://localhost:8000/heating',  data = {'on':False})
 	if (value_hum > 70):
-		requests.post('http://localhost:8000/window',  data = {'open':'true'})
-		requests.post('http://localhost:8000/heating',  data = {'on':'false'})
+		requests.post('http://localhost:8000/window',  data = {'open':True})
+		requests.post('http://localhost:8000/heating',  data = {'on':False})
 	if (value_hum < 50):
-		requests.post('http://localhost:8000/window',  data = {'open':'true'})
-	time.sleep(1)
+		requests.post('http://localhost:8000/window',  data = {'open':False})
+	time.sleep(60)

@@ -4,7 +4,7 @@ from ISStreamer.Streamer import Streamer
 import time
 import requests
 
-streamer = Streamer(bucket_name="GreenTechJam", bucket_key="TACC7PKH5CAU", access_key="ziJyzWVUqBFTbsJ2ctybYrxgMqMQrgcf")
+streamer = Streamer(bucket_name="GreenTechJam", bucket_key="3YBS34VERSCY", access_key="ziJyzWVUqBFTbsJ2ctybYrxgMqMQrgcf")
 
 
 while True:
@@ -34,22 +34,23 @@ while True:
 	bool_window =  dic_window.get('open')
 	if (bool_window == False):
 		window_output = "closed"
-		print(window_output)
 	else:
 		window_output = "opened"
-		print(window_output)
 		
 	
-	#dic_heating = r_heating.json() 
-	#bool_heating =  dic_heating.get('on')
-
+	dic_heating = r_heating.json() 
+	bool_heating =  dic_heating.get('on')
+	if (bool_heating == False):
+		heating_output = "OFF"
+	else:
+		heating_output = "ON"
 
 	streamer.log("Temperature", value_tem)
 	streamer.log("Humidity", value_hum)
 	streamer.log("CO2", value_co2)
 	streamer.log("Window", window_output)
-	#streamer.log("Heating", bool_heating)
+	streamer.log("Heating", heating_output)
 
 
-		#close the stream to properly dispose
+	#close the stream to properly dispose
 	streamer.close()
