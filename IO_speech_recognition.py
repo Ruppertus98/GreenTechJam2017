@@ -15,7 +15,20 @@ def speaker(string_to_repeat):
      tts.save("output_tts.mp3")
      os.system("play output_tts.mp3 2> /dev/null")
   
-
+def CO2out():
+	r_co2 = requests.get('http://localhost:8000/CO2')
+	dic_co2 = r_co2.json() 
+	time_co2 = dic_co2.get('time')
+	time_output = datetime.datetime.strptime(time_co2, '%Y-%m-%dT%H:%M:%S.%f').strftime("%H:%M")
+	value_co2 =  dic_co2.get('value')
+	speaker("The C02 level at " + time_output + " was " + str(value_co2))
+	if (value_co2 > 800):
+		speaker("I'm going to open your window")
+	elif (value_co2 < 600):
+		speaker("I'm going to close your window")
+	
+	
+	
 def listener():
      r = sr.Recognizer()
      with sr.Microphone(sample_rate=44100) as source:
@@ -35,12 +48,7 @@ def listener():
               what_i_said = r.recognize_google(audio)
               print(what_i_said)
               if ("CO2" in what_i_said):
-				r_co2 = requests.get('http://localhost/CO2')
-				dic_co2 = r_co2.json() 
-				time_co2 = dic_co2.get('time')
-				time_output = datetime.datetime.strptime(time_co2, '%Y-%m-%dT%H:%M:%S.%fZ').strftime("%H:%M")
-				value_co2 =  dic_co2.get('value')
-				speaker("The C02 level at " + time_output + " was " + str(value_co2))
+				CO2out()
 				os.system("rm output_tts.mp3 microphone-results.wav")
         except sr.UnknownValueError:
               print("Google Speech Recognition could not understand your audio")
