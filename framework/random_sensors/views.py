@@ -10,13 +10,13 @@ humidity_value = 50
 
 def temperature(request):
     global temperature_value
-    temperature_value = temperature_value + random.normalvariate(0, 1)
-    temperature_value = math.floor(temperature_value)
-    return JsonResponse({'value': temperature_value, 'time': datetime.now().isoformat()})
+    temperature_value = temperature_value + random.triangular(-1, 1)
+    temperature_value = min(max(temperature_value, 0), 35)
+    return JsonResponse({'value': math.floor(temperature_value), 'time': datetime.now().isoformat()})
 
 
 def humidity(request):
     global humidity_value
-    humidity_value = humidity_value + random.normalvariate(0, 1)
-    humidity_value = math.floor(humidity_value)
-    return JsonResponse({'value': humidity_value, 'time': datetime.now().isoformat()})
+    humidity_value = humidity_value + random.triangular(-1, 1)
+    humidity_value = min(max(humidity_value, 20), 90)
+    return JsonResponse({'value': math.floor(humidity_value), 'time': datetime.now().isoformat()})
