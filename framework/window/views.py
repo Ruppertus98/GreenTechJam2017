@@ -8,7 +8,10 @@ def window(request):
     global window_open
     if request.POST:
         newstate = request.POST['open']
-        window_open = bool(newstate)
+        if newstate.lower() == "true":
+            window_open = True
+        else:
+            window_open = False
     return JsonResponse({'open': window_open})
 
 

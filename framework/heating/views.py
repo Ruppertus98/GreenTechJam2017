@@ -7,7 +7,10 @@ def heating(request):
     global heating_state
     if request.POST:
         newstate = request.POST['on']
-        heating_state = newstate
+        if newstate.lower() == "true":
+            heating_state = True
+        else:
+            heating_state = False
     return JsonResponse({'on': heating_state})
 
 
