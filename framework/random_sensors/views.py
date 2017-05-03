@@ -22,9 +22,9 @@ def temperature(request):
         d = outside_temperature_value - temperature_value
         temperature_value = temperature_value + d*random.random()*0.5
     else:
-        temperature_value = temperature_value + random.triangular(-1, 1)
+        temperature_value = temperature_value + random.triangular(-1, 1.4)
 
-    temperature_value = min(max(temperature_value, 0), 35)
+    temperature_value = min(max(temperature_value, 15), 35)
     return JsonResponse({'value': math.floor(temperature_value), 'time': datetime.now().isoformat()})
 
 

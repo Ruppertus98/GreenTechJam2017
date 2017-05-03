@@ -47,7 +47,6 @@
             }
             function outside_temperature() {
                 $.get(host + "outside_temperature").done(function (data) {
-                    console.log(data.value);
                     $("#outside_temp").text(data.value+"°C");
                 })
             }
